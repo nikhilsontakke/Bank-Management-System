@@ -218,10 +218,10 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="aadharno" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="panno" alignment="0" max="32767" attributes="0"/>
-                                      <Component id="ifsc" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="addno" alignment="0" max="32767" attributes="0"/>
                                       <Component id="accno" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="ifsc" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="dob" alignment="0" max="32767" attributes="0"/>
                                       <Component id="name" alignment="0" pref="256" max="32767" attributes="0"/>
                                       <Component id="gender" max="32767" attributes="0"/>
                                   </Group>
@@ -236,7 +236,7 @@
                               </Group>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="number1" max="32767" attributes="0"/>
+                                  <Component id="panno" max="32767" attributes="0"/>
                                   <Component id="address" pref="256" max="32767" attributes="0"/>
                                   <Component id="number" max="32767" attributes="0"/>
                               </Group>
@@ -262,7 +262,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                          <Component id="accno" min="-2" pref="17" max="-2" attributes="0"/>
+                          <Component id="dob" min="-2" pref="17" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -272,11 +272,11 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel12" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="panno" alignment="0" min="-2" pref="17" max="-2" attributes="0"/>
+                          <Component id="accno" alignment="0" min="-2" pref="17" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="aadharno" min="-2" pref="17" max="-2" attributes="0"/>
+                          <Component id="addno" min="-2" pref="17" max="-2" attributes="0"/>
                           <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -297,7 +297,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel17" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="number1" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
+                          <Component id="panno" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                       <Component id="jButton13" min="-2" pref="36" max="-2" attributes="0"/>
@@ -402,7 +402,7 @@
                 <Property name="text" type="java.lang.String" value="SBIN0011648"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="accno">
+            <Component class="javax.swing.JLabel" name="dob">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
@@ -410,7 +410,7 @@
                 <Property name="text" type="java.lang.String" value="31/01/2001"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="aadharno">
+            <Component class="javax.swing.JLabel" name="addno">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
@@ -418,7 +418,7 @@
                 <Property name="text" type="java.lang.String" value="331090296670"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="panno">
+            <Component class="javax.swing.JLabel" name="accno">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>
@@ -458,7 +458,7 @@
                 <Property name="text" type="java.lang.String" value="Pan Number"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="number1">
+            <Component class="javax.swing.JLabel" name="panno">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="14" style="0"/>

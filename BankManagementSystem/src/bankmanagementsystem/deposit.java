@@ -297,7 +297,6 @@ public class deposit extends javax.swing.JFrame {
             
             jOptionPane1.showMessageDialog(this,"please enter a valid amount");
         }
-        System.out.print("updated");
     }//GEN-LAST:event_jButton13ActionPerformed
 
     /**

@@ -193,10 +193,10 @@ public class login extends javax.swing.JFrame {
         String user = username.getText();
         String pass = new String(password.getPassword());
         try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bms?useSSL=false","root","nikhil")) {
+            //Class.forName("com.mysql.jdbc.Driver");
+            try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bms","root","nikhil")) {
                 Statement stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery("select * from login_customer");
+                ResultSet rs = stmt.executeQuery("select * from userdetails");
                 while(rs.next()){
                     System.out.print(rs.getString("username"));
                     if(user.equals(rs.getString("username")) && pass.equals(rs.getString("password"))){

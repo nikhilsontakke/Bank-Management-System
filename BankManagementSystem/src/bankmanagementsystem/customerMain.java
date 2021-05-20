@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package bankmanagementsystem;
+import java.sql.*;
 
 /**
  *
@@ -14,8 +15,28 @@ public class customerMain extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
+    String username;
     public customerMain() {
         initComponents();
+    }
+    public customerMain(String iusername){
+        initComponents();
+        username=iusername;
+    }
+    
+    private void loadDetails(){
+        try{
+            try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bms","root","nikhil")) {
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery("select * from userdetails where username ="+username+"");
+                while(rs.next()){
+                    
+                }
+            }
+        }
+        catch(Exception e){
+            System.out.print(e);
+        }
     }
 
     /**
@@ -51,14 +72,14 @@ public class customerMain extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         ifsc = new javax.swing.JLabel();
+        dob = new javax.swing.JLabel();
+        addno = new javax.swing.JLabel();
         accno = new javax.swing.JLabel();
-        aadharno = new javax.swing.JLabel();
-        panno = new javax.swing.JLabel();
         gender = new javax.swing.JLabel();
         address = new javax.swing.JLabel();
         number = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        number1 = new javax.swing.JLabel();
+        panno = new javax.swing.JLabel();
         jButton13 = new javax.swing.JButton();
         jButton12 = new javax.swing.JButton();
         jButton14 = new javax.swing.JButton();
@@ -149,14 +170,14 @@ public class customerMain extends javax.swing.JFrame {
         ifsc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         ifsc.setText("SBIN0011648");
 
+        dob.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        dob.setText("31/01/2001");
+
+        addno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        addno.setText("331090296670");
+
         accno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        accno.setText("31/01/2001");
-
-        aadharno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        aadharno.setText("331090296670");
-
-        panno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        panno.setText("180062781992");
+        accno.setText("180062781992");
 
         gender.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         gender.setText("Female");
@@ -170,8 +191,8 @@ public class customerMain extends javax.swing.JFrame {
         jLabel17.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel17.setText("Pan Number");
 
-        number1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        number1.setText("LNEPS2248H");
+        panno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        panno.setText("LNEPS2248H");
 
         jButton13.setText("Update Account Details");
         jButton13.addActionListener(new java.awt.event.ActionListener() {
@@ -202,10 +223,10 @@ public class customerMain extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(aadharno, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(panno, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(ifsc, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(addno, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(accno, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(ifsc, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(dob, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(name, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
                                 .addComponent(gender, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addComponent(jButton13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -216,7 +237,7 @@ public class customerMain extends javax.swing.JFrame {
                             .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(number1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(panno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(address, javax.swing.GroupLayout.PREFERRED_SIZE, 256, Short.MAX_VALUE)
                             .addComponent(number, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -236,7 +257,7 @@ public class customerMain extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
-                    .addComponent(accno, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dob, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11)
@@ -244,10 +265,10 @@ public class customerMain extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12)
-                    .addComponent(panno, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(accno, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(aadharno, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addno, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -264,7 +285,7 @@ public class customerMain extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
-                    .addComponent(number1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panno, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
                 .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(40, Short.MAX_VALUE))
@@ -438,9 +459,10 @@ public class customerMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel aadharno;
     private javax.swing.JLabel accno;
+    private javax.swing.JLabel addno;
     private javax.swing.JLabel address;
+    private javax.swing.JLabel dob;
     private javax.swing.JLabel gender;
     private javax.swing.JLabel ifsc;
     private javax.swing.JButton jButton1;
@@ -472,7 +494,6 @@ public class customerMain extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel name;
     private javax.swing.JLabel number;
-    private javax.swing.JLabel number1;
     private javax.swing.JLabel panno;
     // End of variables declaration//GEN-END:variables
 }
