@@ -7,6 +7,7 @@ package bankmanagementsystem;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.*;
+import bankmanagementsystem.currentUser;
 
 /**
  *
@@ -200,8 +201,9 @@ public class login extends javax.swing.JFrame {
                 while(rs.next()){
                     System.out.print(rs.getString("username"));
                     if(user.equals(rs.getString("username")) && pass.equals(rs.getString("password"))){
-                        customerMain obj = new customerMain();
-                        obj.setVisible(true);
+                        currentUser obj = new currentUser(user);
+                        customerMain obj1 = new customerMain();
+                        obj1.setVisible(true);
                         this.setVisible(false);
                     }
                 }

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package bankmanagementsystem;
+import java.sql.*;
 
 /**
  *
@@ -17,5 +18,5 @@ public class BankManagementSystem {
     public static void main(String[] args) {
         // TODO code application logic here
     }
-    
+ 
 }

@@ -5,6 +5,7 @@
  */
 package bankmanagementsystem;
 import java.sql.*;
+import bankmanagementsystem.currentUser;
 
 /**
  *
@@ -15,28 +16,23 @@ public class customerMain extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
-    String username;
     public customerMain() {
         initComponents();
-    }
-    public customerMain(String iusername){
-        initComponents();
-        username=iusername;
+        loadDetails();
     }
     
     private void loadDetails(){
-        try{
-            try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bms","root","nikhil")) {
-                Statement stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery("select * from userdetails where username ="+username+"");
-                while(rs.next()){
-                    
-                }
-            }
-        }
-        catch(Exception e){
-            System.out.print(e);
-        }
+        currentUser obj = new currentUser();
+        name.setText(obj.getName());
+        dob.setText(obj.getDateOfBirth());
+        ifsc.setText(obj.getIfscCode());
+        accno.setText(obj.getAccountNumber());
+        addno.setText(obj.getAadharNumber());
+        gender.setText(obj.getGender());
+        address.setText(obj.getAddress());
+        number.setText(obj.getMobileNumber());
+        panno.setText(obj.getPanNumber());
+       
     }
 
     /**
