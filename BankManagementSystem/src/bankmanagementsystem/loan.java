@@ -16,7 +16,7 @@ public class loan extends javax.swing.JFrame {
      * Creates new form Main
      */
     String username; 
-    String accbal;
+    long accbal;
     String accno1;
     String name1;
     
@@ -33,17 +33,21 @@ public class loan extends javax.swing.JFrame {
                 rs.next();
                 
                 name1 = rs.getString("name");
-                accno1=rs.getString("accno");
+                accno1= rs.getString("accno");
                 name.setText(name1);           
                 ifsc.setText(rs.getString("ifsc"));
-                accno.setText(accno1);               
+                accno.setText(""+accno1);               
                 number.setText(rs.getString("mono"));
                 panno.setText(rs.getString("panno"));
                 username = rs.getString("username");
-                accbal=rs.getString("accbal");
+                accbal= (long)rs.getInt("accbal");
                 rs.close();
                 stmt.close();
                 con.close();
+                
+                customerMain obj = new customerMain();
+                obj.setVisible(true);
+                this.setVisible(false);
             }
         }
         catch(Exception e){
@@ -340,7 +344,7 @@ public class loan extends javax.swing.JFrame {
           try{
             try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bms","bmsmanager","bmspassword")) {
                 Statement stmt = con.createStatement();
-                stmt.executeUpdate("insert into loan_app(accno,name,username,accbal,type,amount) values("+accno1+",'"+name1+"','"+username+"',"+accbal+",'"+type+"',"+","+loan_amount+");");
+                stmt.executeUpdate("insert into loan_app(accno,name,username,accbal,type,amount) values("+accno1+",'"+name1+"','"+username+"',"+accbal+",'"+type+"',"+loan_amount+");");
                
                 
                 stmt.close();
