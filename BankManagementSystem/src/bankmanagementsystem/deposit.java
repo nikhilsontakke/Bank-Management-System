@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package bankmanagementsystem;
+import java.sql.*;
 
 /**
  *
@@ -14,8 +15,32 @@ public class deposit extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
+    String username;
     public deposit() {
         initComponents();
+        loadDetails();
+    }
+
+    private void loadDetails(){
+        try{
+            try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bms","bmsmanager","bmspassword")) {
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery("select * from currentsession;");
+                rs.next();
+                name.setText(rs.getString("name"));           
+                ifsc.setText(rs.getString("ifsc"));
+                accno.setText(rs.getString("accno"));               
+                number.setText(rs.getString("mono"));
+                panno.setText(rs.getString("panno"));
+                
+                rs.close();
+                stmt.close();
+                con.close();
+            }
+        }
+        catch(Exception e){
+            System.out.print(e);
+        }
     }
 
     /**
@@ -49,10 +74,11 @@ public class deposit extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        panno1 = new javax.swing.JLabel();
+        accno = new javax.swing.JLabel();
         aadharno = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         number = new javax.swing.JLabel();
+        jToggleButton1 = new javax.swing.JToggleButton();
         jOptionPane1 = new javax.swing.JOptionPane();
 
         jButton1.setText("jButton1");
@@ -126,8 +152,8 @@ public class deposit extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel14.setText("Aadhar Number");
 
-        panno1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        panno1.setText("180062781992");
+        accno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        accno.setText("180062781992");
 
         aadharno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         aadharno.setText("331090296670");
@@ -137,6 +163,13 @@ public class deposit extends javax.swing.JFrame {
 
         number.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         number.setText("9922023790");
+
+        jToggleButton1.setText("back");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -166,7 +199,7 @@ public class deposit extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(panno1)
+                                        .addComponent(accno)
                                         .addGap(261, 261, 261)
                                         .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -188,8 +221,13 @@ public class deposit extends javax.swing.JFrame {
                         .addGap(316, 316, 316)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(220, 220, 220)
-                .addComponent(jLabel1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(220, 220, 220)
+                        .addComponent(jLabel1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(385, 385, 385)
+                        .addComponent(jToggleButton1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -208,7 +246,7 @@ public class deposit extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel3)
                                     .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(panno1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(accno, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel12)
@@ -236,7 +274,9 @@ public class deposit extends javax.swing.JFrame {
                     .addComponent(jTextField1))
                 .addGap(41, 41, 41)
                 .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(132, 132, 132))
+                .addGap(45, 45, 45)
+                .addComponent(jToggleButton1)
+                .addGap(59, 59, 59))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -299,6 +339,12 @@ public class deposit extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton13ActionPerformed
 
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        // TODO add your handling code here
+        new customerMain().setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -343,6 +389,7 @@ public class deposit extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel aadharno;
+    private javax.swing.JLabel accno;
     private javax.swing.JLabel ifsc;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
@@ -365,9 +412,9 @@ public class deposit extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JLabel name;
     private javax.swing.JLabel number;
     private javax.swing.JLabel panno;
-    private javax.swing.JLabel panno1;
     // End of variables declaration//GEN-END:variables
 }

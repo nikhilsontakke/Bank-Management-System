@@ -7,7 +7,6 @@ package bankmanagementsystem;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.sql.*;
-import bankmanagementsystem.currentUser;
 
 /**
  *
@@ -20,6 +19,20 @@ public class login extends javax.swing.JFrame {
      */
     public login() {
         initComponents();
+        
+        try{
+            try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bms","bmsmanager","bmspassword")) {
+                Statement stmt = con.createStatement();
+                stmt.executeUpdate("CREATE TABLE if not exists currentsession like userdetails;");
+                stmt.executeUpdate("DELETE from currentsession");
+                stmt.close();
+                con.close();             
+            }
+        }
+        catch(Exception e){
+            System.out.print(e);
+        }
+        
     }
 
     /**
@@ -81,6 +94,11 @@ public class login extends javax.swing.JFrame {
                 usernameActionPerformed(evt);
             }
         });
+        username.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                usernameKeyPressed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel4.setText("Password");
@@ -98,6 +116,11 @@ public class login extends javax.swing.JFrame {
         password.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 passwordActionPerformed(evt);
+            }
+        });
+        password.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passwordKeyPressed(evt);
             }
         });
 
@@ -187,32 +210,59 @@ public class login extends javax.swing.JFrame {
 
     private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
         // TODO add your handling code here:
+        jButton1.doClick();
     }//GEN-LAST:event_passwordActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String user = username.getText();
         String pass = new String(password.getPassword());
+        String name,dob,ifsc,accountNo,aadharNo,gender,address,mobileNo,panNo;
         try{
             //Class.forName("com.mysql.jdbc.Driver");
-            try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bms","bmsmanager","bmspassword")) {
-                Statement stmt = con.createStatement();
-                ResultSet rs = stmt.executeQuery("select * from userdetails");
-                while(rs.next()){
-                    System.out.print(rs.getString("username"));
-                    if(user.equals(rs.getString("username")) && pass.equals(rs.getString("password"))){
-                        currentUser obj = new currentUser(user);
-                        customerMain obj1 = new customerMain();
-                        obj1.setVisible(true);
-                        this.setVisible(false);
-                    }
+            Connection con;
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bms","bmsmanager","bmspassword");
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from userdetails");
+            while(rs.next()){
+                if(user.equals(rs.getString("username")) && pass.equals(rs.getString("password"))){
+                    name = rs.getString("name");
+                    dob = rs.getString("dob");
+                    ifsc = rs.getString("ifsc");
+                    accountNo = rs.getString("accno");
+                    aadharNo = rs.getString("addno");
+                    gender = rs.getString("gen");
+                    address = rs.getString("address");
+                    mobileNo = rs.getString("mono");
+                    panNo = rs.getString("panno");
+                    
+                    Statement stmt2 = con.createStatement();
+                    stmt2.executeUpdate("insert into currentsession (name,dob,ifsc,accno,addno,gen,address,mono,panno,username,password) values ('"+name+"','"+dob+"','"+ifsc+"',"+accountNo+","+aadharNo+",'"+gender+"','"+address+"',"+mobileNo+",'"+panNo+"','"+user+"','"+pass+"');");
+                    
+                    customerMain obj = new customerMain();
+                    obj.setVisible(true);
+                    this.setVisible(false);
                 }
             }
+            rs.close();
+            stmt.close();
+            con.close();
+           
         }
         catch(Exception e){
-            System.out.print(e);
+            System.out.print(e+"login");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void passwordKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordKeyPressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_passwordKeyPressed
+
+    private void usernameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usernameKeyPressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_usernameKeyPressed
 
     /**
      * @param args the command line arguments

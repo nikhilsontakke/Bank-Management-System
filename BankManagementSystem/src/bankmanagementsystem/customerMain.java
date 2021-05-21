@@ -5,7 +5,6 @@
  */
 package bankmanagementsystem;
 import java.sql.*;
-import bankmanagementsystem.currentUser;
 
 /**
  *
@@ -16,23 +15,35 @@ public class customerMain extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
+    String username;
     public customerMain() {
         initComponents();
         loadDetails();
     }
     
     private void loadDetails(){
-        currentUser obj = new currentUser();
-        name.setText(obj.getName());
-        dob.setText(obj.getDateOfBirth());
-        ifsc.setText(obj.getIfscCode());
-        accno.setText(obj.getAccountNumber());
-        addno.setText(obj.getAadharNumber());
-        gender.setText(obj.getGender());
-        address.setText(obj.getAddress());
-        number.setText(obj.getMobileNumber());
-        panno.setText(obj.getPanNumber());
-       
+        try{
+            try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bms","bmsmanager","bmspassword")) {
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery("select * from currentsession;");
+                rs.next();
+                name.setText(rs.getString("name"));
+                dob.setText(rs.getString("dob"));
+                ifsc.setText(rs.getString("ifsc"));
+                accno.setText(rs.getString("accno"));
+                addno.setText(rs.getString("addno"));
+                gender.setText(rs.getString("gen"));
+                address.setText(rs.getString("address"));
+                number.setText(rs.getString("mono"));
+                panno.setText(rs.getString("panno"));
+                rs.close();
+                stmt.close();
+                con.close();
+            }
+        }
+        catch(Exception e){
+            System.out.print(e+"main load");
+        }
     }
 
     /**
