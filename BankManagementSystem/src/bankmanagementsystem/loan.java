@@ -45,9 +45,7 @@ public class loan extends javax.swing.JFrame {
                 stmt.close();
                 con.close();
                 
-                customerMain obj = new customerMain();
-                obj.setVisible(true);
-                this.setVisible(false);
+               
             }
         }
         catch(Exception e){
@@ -349,6 +347,9 @@ public class loan extends javax.swing.JFrame {
                 
                 stmt.close();
                 con.close();
+                customerMain obj = new customerMain();
+                obj.setVisible(true);
+                this.setVisible(false);
             }
         }
         catch(Exception e){
