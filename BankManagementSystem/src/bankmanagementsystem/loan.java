@@ -16,6 +16,9 @@ public class loan extends javax.swing.JFrame {
      * Creates new form Main
      */
     String username; 
+    String accbal;
+    String accno1;
+    String name1;
     
     public loan() {
         initComponents();
@@ -28,12 +31,16 @@ public class loan extends javax.swing.JFrame {
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery("select * from currentsession;");
                 rs.next();
-                name.setText(rs.getString("name"));           
+                
+                name1 = rs.getString("name");
+                accno1=rs.getString("accno");
+                name.setText(name1);           
                 ifsc.setText(rs.getString("ifsc"));
-                accno.setText(rs.getString("accno"));               
+                accno.setText(accno1);               
                 number.setText(rs.getString("mono"));
                 panno.setText(rs.getString("panno"));
                 username = rs.getString("username");
+                accbal=rs.getString("accbal");
                 rs.close();
                 stmt.close();
                 con.close();
@@ -93,6 +100,11 @@ public class loan extends javax.swing.JFrame {
         jButton10.setText("jButton10");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -164,6 +176,11 @@ public class loan extends javax.swing.JFrame {
 
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Personal Loan", "Home Loan", "Car Loan", "Study Loan", "Business Loan", "Property Loan" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         panno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         panno.setText("LNEPS2248H");
@@ -317,11 +334,36 @@ public class loan extends javax.swing.JFrame {
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
         // TODO add your handling code here:
+        int loan_amount = Integer.parseInt(jTextField1.getText());
+        String type = (String)jComboBox1.getSelectedItem();
+        
+          try{
+            try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bms","bmsmanager","bmspassword")) {
+                Statement stmt = con.createStatement();
+                stmt.executeUpdate("insert into loan_app(accno,name,username,accbal,type,amount) values("+accno1+",'"+name1+"','"+username+"',"+accbal+",'"+type+"',"+","+loan_amount+");");
+               
+                
+                stmt.close();
+                con.close();
+            }
+        }
+        catch(Exception e){
+            System.out.print(e);
+        }
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox1ActionPerformed
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        this.setLocationRelativeTo(null);
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments
