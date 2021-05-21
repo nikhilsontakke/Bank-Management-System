@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package bankmanagementsystem;
+import java.sql.*;
 
 /**
  *
@@ -14,8 +15,33 @@ public class loan extends javax.swing.JFrame {
     /**
      * Creates new form Main
      */
+    String username; 
+    
     public loan() {
         initComponents();
+        loadDetails();
+    }
+    
+    private void loadDetails(){
+        try{
+            try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bms","bmsmanager","bmspassword")) {
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery("select * from currentsession;");
+                rs.next();
+                name.setText(rs.getString("name"));           
+                ifsc.setText(rs.getString("ifsc"));
+                accno.setText(rs.getString("accno"));               
+                number.setText(rs.getString("mono"));
+                panno.setText(rs.getString("panno"));
+                username = rs.getString("username");
+                rs.close();
+                stmt.close();
+                con.close();
+            }
+        }
+        catch(Exception e){
+            System.out.print(e);
+        }
     }
 
     /**
@@ -47,7 +73,7 @@ public class loan extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        panno1 = new javax.swing.JLabel();
+        accno = new javax.swing.JLabel();
         aadharno = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         number = new javax.swing.JLabel();
@@ -121,8 +147,8 @@ public class loan extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel14.setText("Aadhar Number");
 
-        panno1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        panno1.setText("180062781992");
+        accno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        accno.setText("180062781992");
 
         aadharno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         aadharno.setText("331090296670");
@@ -150,9 +176,16 @@ public class loan extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGap(220, 220, 220)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(48, 48, 48)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(48, 48, 48)
+                        .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 518, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,7 +206,7 @@ public class loan extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(panno1))
+                                        .addComponent(accno))
                                     .addComponent(aadharno)
                                     .addComponent(number, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(322, 322, 322)
@@ -190,16 +223,8 @@ public class loan extends javax.swing.JFrame {
                                             .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
                                             .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                     .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(316, 316, 316)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(220, 220, 220)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -225,7 +250,7 @@ public class loan extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel11)
                                     .addComponent(ifsc, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(panno1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(accno, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel13)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -366,6 +391,7 @@ public class loan extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel aadharno;
+    private javax.swing.JLabel accno;
     private javax.swing.JLabel ifsc;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
@@ -392,6 +418,5 @@ public class loan extends javax.swing.JFrame {
     private javax.swing.JLabel name;
     private javax.swing.JLabel number;
     private javax.swing.JLabel panno;
-    private javax.swing.JLabel panno1;
     // End of variables declaration//GEN-END:variables
 }
