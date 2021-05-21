@@ -55,7 +55,7 @@ public class showDeposit extends javax.swing.JFrame {
             tm.setRowCount(0);
             while(rs.next())
             {
-                Object o[]={rs.getLong("depo_no"),rs.getString("amount"),rs.getString("tenure"),rs.getString("interest")};
+                Object o[]={rs.getLong("depo_num"),rs.getString("amount"),rs.getString("tenure"),rs.getString("interest")};
                 tm.addRow(o);
             }
         }

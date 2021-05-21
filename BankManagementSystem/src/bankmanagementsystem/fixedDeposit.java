@@ -4,18 +4,56 @@
  * and open the template in the editor.
  */
 package bankmanagementsystem;
+import java.sql.*;
 
 /**
  *
  * @author nikhi
  */
+
 public class fixedDeposit extends javax.swing.JFrame {
 
     /**
      * Creates new form Main
      */
+    String username;
     public fixedDeposit() {
         initComponents();
+        loadDetails();
+        try{
+            //Class.forName("com.mysql.jdbc.Driver");
+            Connection con;
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bms","bmsmanager","bmspassword");
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("create table IF NOT EXISTS  fixed_"+username+"(depo_num varchar(10),amount varchar(20),tenure varchar(10), interest varchar(10));");
+            stmt.close();
+            con.close();           
+         }catch(Exception e){
+              System.out.print(e);
+         }
+    }
+    private void loadDetails(){
+        try{
+            try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bms","bmsmanager","bmspassword")) {
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery("select * from currentsession;");
+                rs.next();
+                name.setText(rs.getString("name"));
+                
+                ifsc.setText(rs.getString("ifsc"));
+                accno.setText(rs.getString("accno"));
+                aadharno.setText(rs.getString("addno"));
+                number.setText(rs.getString("mono"));
+                panno.setText(rs.getString("panno"));
+                username =rs.getString("username");
+                rs.close();
+                stmt.close();
+                con.close();
+            }
+        }
+        catch(Exception e){
+            System.out.print(e+"main load");
+        }
     }
 
     /**
@@ -49,14 +87,14 @@ public class fixedDeposit extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        panno1 = new javax.swing.JLabel();
+        accno = new javax.swing.JLabel();
         aadharno = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         number = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
+        interest = new javax.swing.JTextField();
         jButton2 = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
@@ -135,8 +173,8 @@ public class fixedDeposit extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel14.setText("Aadhar Number");
 
-        panno1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        panno1.setText("180062781992");
+        accno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        accno.setText("180062781992");
 
         aadharno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         aadharno.setText("331090296670");
@@ -147,9 +185,6 @@ public class fixedDeposit extends javax.swing.JFrame {
         number.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         number.setText("9922023790");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel5.setText("Fixed Deposit Interest");
-
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Fixed Deposit Tenure");
 
@@ -158,6 +193,8 @@ public class fixedDeposit extends javax.swing.JFrame {
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("Fixed Deposit Interest");
+
+        interest.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -197,7 +234,7 @@ public class fixedDeposit extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(panno1)
+                                        .addComponent(accno)
                                         .addGap(261, 261, 261)
                                         .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -214,8 +251,8 @@ public class fixedDeposit extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jTextField1)
-                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE))
+                                    .addComponent(jComboBox1, 0, 215, Short.MAX_VALUE)
+                                    .addComponent(interest))
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
@@ -235,7 +272,7 @@ public class fixedDeposit extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel3)
                                     .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(panno1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(accno, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel12)
@@ -267,8 +304,8 @@ public class fixedDeposit extends javax.swing.JFrame {
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(interest))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                 .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22))
@@ -309,7 +346,7 @@ public class fixedDeposit extends javax.swing.JFrame {
                         .addComponent(jButton2)))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -328,6 +365,28 @@ public class fixedDeposit extends javax.swing.JFrame {
 
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
         // TODO add your handling code here:
+        String amount = jTextField1.getText();
+         double Randi = Math.random();
+         int randi =Integer.parseInt(amount);
+         String tenure = (String)jComboBox1.getSelectedItem();
+         String interest1= interest.getText();
+          try{
+             
+            //Class.forName("com.mysql.jdbc.Driver");
+            Connection con;
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bms","bmsmanager","bmspassword");
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("Insert into  fixed_"+username+"(depo_num ,amount ,tenure , interest ) values( "+randi*23+",'"+amount+"','"+tenure+"','"+interest1+"')");
+            
+            customerMain obj = new customerMain();
+            obj.setVisible(true);
+            this.setVisible(false);
+            
+            stmt.close();
+            con.close();
+          }catch(Exception e){
+              System.out.print(e+"error in fixed deposit ");
+          }
         
     }//GEN-LAST:event_jButton13ActionPerformed
 
@@ -399,7 +458,9 @@ public class fixedDeposit extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel aadharno;
+    private javax.swing.JLabel accno;
     private javax.swing.JLabel ifsc;
+    private javax.swing.JTextField interest;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton13;
@@ -419,7 +480,6 @@ public class fixedDeposit extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
@@ -428,6 +488,5 @@ public class fixedDeposit extends javax.swing.JFrame {
     private javax.swing.JLabel name;
     private javax.swing.JLabel number;
     private javax.swing.JLabel panno;
-    private javax.swing.JLabel panno1;
     // End of variables declaration//GEN-END:variables
 }

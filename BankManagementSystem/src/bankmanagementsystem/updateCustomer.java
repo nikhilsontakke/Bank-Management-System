@@ -5,6 +5,7 @@
  */
 package bankmanagementsystem;
 import java.sql.*;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -447,6 +448,7 @@ public class updateCustomer extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         String user = jTextField1.getText();
+        boolean a = true;
         try{
             //Class.forName("com.mysql.jdbc.Driver");
             Connection con;
@@ -459,8 +461,13 @@ public class updateCustomer extends javax.swing.JFrame {
                     jPanel3.setVisible(false);
                     jPanel1.setVisible(true);
                     jButton19.setVisible(true);
+                    a = false;
                 }
             }
+            if(a){
+                JOptionPane.showMessageDialog(this,"No user Found");
+            }
+            
             rs.close();
             stmt.close();
             con.close();
