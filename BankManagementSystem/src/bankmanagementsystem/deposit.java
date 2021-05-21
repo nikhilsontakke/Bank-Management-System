@@ -39,7 +39,7 @@ public class deposit extends javax.swing.JFrame {
             }
         }
         catch(Exception e){
-            System.out.print(e);
+            System.out.println(e+" deposit issue ");
         }
     }
 
