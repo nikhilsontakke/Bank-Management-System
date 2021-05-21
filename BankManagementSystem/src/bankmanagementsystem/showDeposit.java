@@ -4,18 +4,64 @@
  * and open the template in the editor.
  */
 package bankmanagementsystem;
+import java.sql.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author nikhi
+ * @author nikhil
  */
 public class showDeposit extends javax.swing.JFrame {
 
     /**
      * Creates new form Main
      */
+    String username;
     public showDeposit() {
         initComponents();
+        loadDetails();
+        loadTable();
+    }
+    
+    private void loadDetails(){
+        try{
+            try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bms","bmsmanager","bmspassword")) {
+                Statement stmt = con.createStatement();
+                ResultSet rs = stmt.executeQuery("select * from currentsession;");
+                rs.next();
+                name.setText(rs.getString("name"));           
+                ifsc.setText(rs.getString("ifsc"));
+                accno.setText(rs.getString("accno"));               
+                number.setText(rs.getString("mono"));
+                panno.setText(rs.getString("panno"));
+                username = rs.getString("username");
+                rs.close();
+                stmt.close();
+                con.close();
+            }
+        }
+        catch(Exception e){
+            System.out.println(e);
+        }
+    }
+    private void loadTable(){
+        try{
+            Connection con;
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bms","bmsmanager","bmspassword");
+            Statement stmt = con.createStatement();
+            PreparedStatement ps=con.prepareStatement("SELECT * FROM fixed_"+username+";");
+            ResultSet rs=ps.executeQuery();
+            DefaultTableModel tm=(DefaultTableModel)table.getModel();
+            tm.setRowCount(0);
+            while(rs.next())
+            {
+                Object o[]={rs.getLong("depo_no"),rs.getString("amount"),rs.getString("tenure"),rs.getString("interest")};
+                tm.addRow(o);
+            }
+        }
+        catch(Exception e){
+            System.out.print(e);
+        }
     }
 
     /**
@@ -47,12 +93,13 @@ public class showDeposit extends javax.swing.JFrame {
         panno = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        panno1 = new javax.swing.JLabel();
+        accno = new javax.swing.JLabel();
         aadharno = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         number = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        table = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -123,8 +170,8 @@ public class showDeposit extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel14.setText("Aadhar Number");
 
-        panno1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        panno1.setText("180062781992");
+        accno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        accno.setText("180062781992");
 
         aadharno.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         aadharno.setText("331090296670");
@@ -135,7 +182,7 @@ public class showDeposit extends javax.swing.JFrame {
         number.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         number.setText("9922023790");
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null}
             },
@@ -143,7 +190,7 @@ public class showDeposit extends javax.swing.JFrame {
                 "Deposit Number", "Amount", "Tenure", "Interest Rate"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(table);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -178,7 +225,7 @@ public class showDeposit extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(panno1)
+                                .addComponent(accno)
                                 .addGap(261, 261, 261)
                                 .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -204,7 +251,7 @@ public class showDeposit extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel3)
                                     .addComponent(name, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(panno1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(accno, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel12)
@@ -229,6 +276,13 @@ public class showDeposit extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        jButton2.setText("Homepage");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -236,7 +290,9 @@ public class showDeposit extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(169, 169, 169)
+                        .addContainerGap()
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(48, 48, 48)
                         .addComponent(jLabel2))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(56, 56, 56)
@@ -246,11 +302,16 @@ public class showDeposit extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton2)))
+                .addGap(31, 31, 31)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(229, 229, 229))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -261,7 +322,7 @@ public class showDeposit extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 550, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -271,6 +332,13 @@ public class showDeposit extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.setLocationRelativeTo(null);
     }//GEN-LAST:event_formWindowActivated
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        customerMain obj = new customerMain();
+        obj.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -324,9 +392,11 @@ public class showDeposit extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel aadharno;
+    private javax.swing.JLabel accno;
     private javax.swing.JLabel ifsc;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
@@ -344,10 +414,9 @@ public class showDeposit extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JLabel name;
     private javax.swing.JLabel number;
     private javax.swing.JLabel panno;
-    private javax.swing.JLabel panno1;
+    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }
