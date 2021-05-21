@@ -218,6 +218,7 @@ public class login extends javax.swing.JFrame {
         String user = username.getText();
         String pass = new String(password.getPassword());
         String name,dob,ifsc,accountNo,aadharNo,gender,address,mobileNo,panNo;
+        long accbal;
         try{
             //Class.forName("com.mysql.jdbc.Driver");
             Connection con;
@@ -235,9 +236,10 @@ public class login extends javax.swing.JFrame {
                     address = rs.getString("address");
                     mobileNo = rs.getString("mono");
                     panNo = rs.getString("panno");
+                    accbal = rs.getInt("accbal");
                     
                     Statement stmt2 = con.createStatement();
-                    stmt2.executeUpdate("insert into currentsession (name,dob,ifsc,accno,addno,gen,address,mono,panno,username,password) values ('"+name+"','"+dob+"','"+ifsc+"',"+accountNo+","+aadharNo+",'"+gender+"','"+address+"',"+mobileNo+",'"+panNo+"','"+user+"','"+pass+"');");
+                    stmt2.executeUpdate("insert into currentsession (name,dob,ifsc,accno,addno,gen,address,mono,panno,username,password,accbal) values ('"+name+"','"+dob+"','"+ifsc+"',"+accountNo+","+aadharNo+",'"+gender+"','"+address+"',"+mobileNo+",'"+panNo+"','"+user+"','"+pass+"','"+accbal+"');");
                     
                     customerMain obj = new customerMain();
                     obj.setVisible(true);

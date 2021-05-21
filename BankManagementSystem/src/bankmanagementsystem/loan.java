@@ -45,9 +45,6 @@ public class loan extends javax.swing.JFrame {
                 stmt.close();
                 con.close();
                 
-                customerMain obj = new customerMain();
-                obj.setVisible(true);
-                this.setVisible(false);
             }
         }
         catch(Exception e){
@@ -345,10 +342,11 @@ public class loan extends javax.swing.JFrame {
             try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bms","bmsmanager","bmspassword")) {
                 Statement stmt = con.createStatement();
                 stmt.executeUpdate("insert into loan_app(accno,name,username,accbal,type,amount) values("+accno1+",'"+name1+"','"+username+"',"+accbal+",'"+type+"',"+loan_amount+");");
-               
-                
                 stmt.close();
                 con.close();
+                customerMain obj = new customerMain();
+                obj.setVisible(true);
+                this.setVisible(false);
             }
         }
         catch(Exception e){
