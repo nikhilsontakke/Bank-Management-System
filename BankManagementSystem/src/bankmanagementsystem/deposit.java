@@ -348,7 +348,7 @@ public class deposit extends javax.swing.JFrame {
             new customerMain().setVisible(true);
             this.setVisible(false);
             stmt.close();
-            con.close();             
+            con.close();
             
         }
         catch(Exception e){
