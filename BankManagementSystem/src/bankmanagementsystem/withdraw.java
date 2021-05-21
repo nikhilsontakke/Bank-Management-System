@@ -328,7 +328,7 @@ public class withdraw extends javax.swing.JFrame {
             
         }
         catch(Exception e){
-            System.out.print(e);
+            System.out.println(e+"withraw issue");
         }
     }//GEN-LAST:event_jButton13ActionPerformed
 

@@ -30,7 +30,7 @@ public class login extends javax.swing.JFrame {
             }
         }
         catch(Exception e){
-            System.out.print(e);
+            System.out.println(e+" login issue");
         }
         
     }
@@ -252,7 +252,7 @@ public class login extends javax.swing.JFrame {
            
         }
         catch(Exception e){
-            System.out.print(e+"login");
+            System.out.print(e+" login button issue ");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -39,7 +39,7 @@ public class deposit extends javax.swing.JFrame {
             }
         }
         catch(Exception e){
-            System.out.print(e);
+            System.out.println(e+" deposit issue ");
         }
     }
 
@@ -348,7 +348,7 @@ public class deposit extends javax.swing.JFrame {
             new customerMain().setVisible(true);
             this.setVisible(false);
             stmt.close();
-            con.close();             
+            con.close();
             
         }
         catch(Exception e){
